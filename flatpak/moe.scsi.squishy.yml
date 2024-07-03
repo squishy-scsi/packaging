@@ -1,0 +1,53 @@
+id: moe.scsi.squishy
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: squishy-runner
+finish-args:
+  - --device=all # for accessing usb devices and the like
+modules:
+  - name: libusb
+    config-opts:
+      - "--disable-static"
+    cleanup:
+      - "/lib/*.la"
+      - "/lib/pkgconfig"
+      - "/include"
+    sources:
+      - type: archive
+        url: https://github.com/libusb/libusb/archive/v1.0.27.tar.gz
+        sha256: e8f18a7a36ecbb11fb820bd71540350d8f61bcd9db0d2e8c18a6fb80b214a3de
+    post-install:
+      - install -Dm644 COPYING /app/share/licenses/libusb/COPYING
+
+  - name: cython
+    sources:
+      - type: archive
+        url: https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tar.xz
+        md5: 22ea467e7d915477152e99d5da856ddc # python still only supplies md5 sumsA
+
+  - name: oss-cad-suite
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 bin/* /app/bin/
+    sources:
+      - type: archive
+        url: https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2024-07-03/oss-cad-suite-linux-x64-20240703.tgz
+        sha256: df948ed100bbabd7a928304a31e3f9bd87075fb126df1c03b007d4b34fe5eb4b
+
+  - name: squishy
+    buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network  # for downloaded requirements
+    build-commands:
+      - pip3 install --prefix=/app 'squishy @ git+https://github.com/squishy-scsi/squishy.git' # TODO: this shold be specific release
+
+  - name: squishy-runner
+    buildsystem: simple
+    build-commands:
+      - install -Dm0755 flatpak-runner.sh /app/bin/squishy-runner
+    sources:
+      - type: file
+        path: flatpak-runner.sh
+
