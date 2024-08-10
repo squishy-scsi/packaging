@@ -1,0 +1,14 @@
+name: nextpnr-ice40
+buildsystem: cmake-ninja
+config-opts:
+  - '-DARCH=ice40'
+  - '-DBUILD_PYTHON=ON'
+  # this requires QT to work
+  # - '-DBUILD_GUI=ON'
+  - '-DCMAKE_INSTALL_PREFIX=/app'
+  - '-DCMAKE_BUILD_TYPE=RelWithDebInfo'
+  - '-DCMAKE_EXE_LINKER_FLAGS=-ldl'
+sources:
+  - type: git
+    url: 'https://github.com/YosysHQ/nextpnr.git'
+    tag: nextpnr-0.7

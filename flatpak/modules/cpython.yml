@@ -1,0 +1,5 @@
+name: cpython
+sources:
+  - type: archive
+    url: https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tar.xz
+    md5: 22ea467e7d915477152e99d5da856ddc # python still only supplies md5 sums

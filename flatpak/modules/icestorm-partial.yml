@@ -1,0 +1,13 @@
+name: icestorm-partial
+buildsystem: simple
+build-commands:
+  - make -j $FLATPAK_BUILDER_N_JOBS CXX=g++ PREFIX=/app -C icepack
+  - make -j $FLATPAK_BUILDER_N_JOBS CXX=g++ PREFIX=/app -C icebox
+  - make -j $FLATPAK_BUILDER_N_JOBS CXX=g++ PREFIX=/app -C icetime
+  - make PREFIX=/app -C icepack install
+  - make PREFIX=/app -C icebox install
+  - make PREFIX=/app -C icetime install
+sources:
+  - type: git
+    url: 'https://github.com/YosysHQ/icestorm.git'
+    commit: 738af822905fdcf0466e9dd784b9ae4b0b34987f

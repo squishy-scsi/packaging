@@ -4,6 +4,8 @@
 
 ## Building and running locally
 
+**NOTE:** Due to a bug in older versions of flatpak-builder version `>=1.2.3` is required (https://github.com/flatpak/flatpak-builder/pull/497)
+
 In order to build and run this locally, you need `flatpak` and `flatpak-builder`.
 Se instructions in: https://docs.flatpak.org/en/latest/first-build.html
 

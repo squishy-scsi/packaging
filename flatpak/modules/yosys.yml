@@ -1,0 +1,15 @@
+name: yosys
+buildsystem: simple
+build-commands:
+  - make -j $FLATPAK_BUILDER_N_JOBS PREFIX=/app
+  - make STRIP=':' PREFIX=/app install
+sources:
+  - type: git
+    url: https://github.com/YosysHQ/yosys.git
+    tag: yosys-0.44
+  - type: patch
+    path: ../patches/0001-trimmed-build-for-squishy.patch
+  - type: file
+    path: ../contrib/Makefile.conf
+post-install:
+  - install -Dm644 COPYING /app/share/licenses/yosys/COPYING

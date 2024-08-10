@@ -1,0 +1,14 @@
+name: tcl
+config-opts:
+  - "--enable-64-bit"
+  - "--prefix=/app"
+  - "--enable-symbols"
+subdir: unix
+sources:
+  - type: git
+    url: https://github.com/tcltk/tcl.git
+    commit: eea5dba
+post-install:
+  - chmod 755 /app/lib/libtcl8.6.so
+  - ln -s /app/bin/tclsh8.6 /app/bin/tclsh
+  - install -Dm644 ../license.terms /app/share/licenses/tlc/license.terms
